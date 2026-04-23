@@ -20,6 +20,12 @@
 
       backButton.addEventListener("click", () => {
         if (window.opener && !window.opener.closed) {
+          try {
+            window.opener.focus();
+          } catch (error) {
+            status.textContent = "Opener detected, but focus was blocked by the browser.";
+          }
+
           window.opener.postMessage("focus", "*");
           window.close();
           return;

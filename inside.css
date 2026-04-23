@@ -56,6 +56,11 @@ button:hover {
   min-height: 1.2rem;
 }
 
-body.focused {
-  transform: scale(1.01);
+body.needs-focus .container {
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12), 0 0 0 3px rgba(3, 105, 161, 0.25);
+}
+
+body.attention-flash .container {
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12), 0 0 0 8px rgba(3, 105, 161, 0.45);
+  transform: scale(1.015);
 }

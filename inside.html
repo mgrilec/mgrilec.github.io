@@ -16,6 +16,34 @@
     <script>
       const button = document.getElementById("openCarelaButton");
       const status = document.getElementById("status");
+      const defaultTitle = document.title;
+      let flashIntervalId = null;
+      let flashState = false;
+
+      const stopFlashUntilFocused = () => {
+        if (flashIntervalId === null) {
+          return;
+        }
+
+        clearInterval(flashIntervalId);
+        flashIntervalId = null;
+        flashState = false;
+        document.title = defaultTitle;
+        document.body.classList.remove("needs-focus", "attention-flash");
+      };
+
+      const startFlashUntilFocused = () => {
+        if (flashIntervalId !== null) {
+          return;
+        }
+
+        document.body.classList.add("needs-focus");
+        flashIntervalId = setInterval(() => {
+          flashState = !flashState;
+          document.body.classList.toggle("attention-flash", flashState);
+          document.title = flashState ? "(Back to Inside) " + defaultTitle : defaultTitle;
+        }, 450);
+      };
 
       button.addEventListener("click", () => {
         const newTab = window.open("carela.html", "_blank");
@@ -30,12 +58,21 @@
       window.addEventListener("message", (event) => {
         if (event.data === "focus") {
           window.focus();
-          status.textContent = "Focus message received from Carela.";
-          document.body.classList.add("focused");
+          startFlashUntilFocused();
 
-          setTimeout(() => {
-            document.body.classList.remove("focused");
-          }, 900);
+          if (document.hasFocus()) {
+            stopFlashUntilFocused();
+            status.textContent = "Focus message received from Carela.";
+          } else {
+            status.textContent = "Focus requested. Flashing until this tab is focused.";
+          }
+        }
+      });
+
+      window.addEventListener("focus", () => {
+        if (flashIntervalId !== null) {
+          stopFlashUntilFocused();
+          status.textContent = "Inside is focused.";
         }
       });
     </script>

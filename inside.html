@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inside</title>
+    <link rel="stylesheet" href="inside.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Inside</h1>
+      <button id="openCarelaButton" type="button">Open Carela</button>
+      <p id="status" aria-live="polite">Waiting for message from Carela...</p>
+    </main>
+
+    <script>
+      const button = document.getElementById("openCarelaButton");
+      const status = document.getElementById("status");
+
+      button.addEventListener("click", () => {
+        const newTab = window.open("carela.html", "_blank");
+
+        if (newTab) {
+          status.textContent = "Carela opened in a new tab.";
+        } else {
+          status.textContent = "Popup blocked. Please allow popups for this site.";
+        }
+      });
+
+      window.addEventListener("message", (event) => {
+        if (event.data === "focus") {
+          window.focus();
+          status.textContent = "Focus message received from Carela.";
+          document.body.classList.add("focused");
+
+          setTimeout(() => {
+            document.body.classList.remove("focused");
+          }, 900);
+        }
+      });
+    </script>
+  </body>
+</html>

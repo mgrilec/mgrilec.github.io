@@ -1,0 +1,56 @@
+:root {
+  --bg: linear-gradient(120deg, #fff7ed 0%, #fee2e2 100%);
+  --card: #ffffff;
+  --text: #111827;
+  --accent: #b91c1c;
+  --ring: rgba(185, 28, 28, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  background: var(--card);
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+  width: min(90vw, 460px);
+  text-align: center;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px var(--ring);
+}
+
+#status {
+  margin-top: 1rem;
+  min-height: 1.2rem;
+}

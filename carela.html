@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carela</title>
+    <link rel="stylesheet" href="carela.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Carela</h1>
+      <p>Use the button below to return focus to Inside.</p>
+      <button id="backButton" type="button">Back to Inside</button>
+      <p id="status" aria-live="polite"></p>
+    </main>
+
+    <script>
+      const backButton = document.getElementById("backButton");
+      const status = document.getElementById("status");
+
+      backButton.addEventListener("click", () => {
+        if (window.opener && !window.opener.closed) {
+          window.opener.postMessage("focus", "*");
+          window.close();
+          return;
+        }
+
+        status.textContent = "No opener detected. Redirecting to Inside...";
+        window.location.href = "inside.html";
+      });
+    </script>
+  </body>
+</html>
